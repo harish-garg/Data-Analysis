@@ -1,0 +1,7 @@
+reddit <- read.csv("reddit.csv")
+table(reddit$employment.status)
+summary(reddit)
+levels(reddit$age.range)
+reddit$age.range <- relevel(reddit$age.range, "Under 18")
+library(ggplot2)
+qplot(data = reddit, x = age.range)
