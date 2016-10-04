@@ -119,3 +119,5 @@ qplot(x = price, data = diamonds) + facet_wrap(~cut)
 # be different for each histogram.
 
 # If you want a hint, check out the Instructor Notes.
+
+ggplot(diamonds, aes(clarity, fill=cut)) + geom_bar()
