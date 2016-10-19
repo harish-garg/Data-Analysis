@@ -1,0 +1,247 @@
+
+/* OSTR Header Styles */
+#header-layout-type .container-inline DIV
+{
+        display: inline;
+}
+#header-layout-type .container-inline LABEL
+{
+        display: inline;
+}
+#header-layout-type .element-invisible
+{
+        clip: rect(1px 1px 1px 1px); POSITION: absolute !important;
+        height: 1px;
+        overflow: hidden;
+}
+#header-layout-type FORM
+{
+        padding-bottom: 0px;
+        margin: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 0px;
+}
+#header-layout-type IMG
+{
+        border-bottom: 0px;
+        border-left: 0px;
+        border-top: 0px;
+        border-right: 0px;
+}
+#header-layout-type .form-item
+{
+        margin-top: 1em;
+        margin-bottom: 1em;
+}
+#header-layout-type .form-actions
+{
+        margin-top: 1em;
+        margin-bottom: 1em;
+}
+#header-layout-type LABEL
+{
+        display: block;
+        font-weight: bold;
+}
+#header-layout-type .container-inline .form-actions
+{
+        margin-top: 0px;
+        margin-bottom: 0px;
+}
+#header-layout-type
+{
+        height: 101%;
+        font-size: 84%;
+}
+BODY
+{
+        margin: 0px;
+}
+#header A
+{
+        text-decoration: none;
+}
+#header A:link
+{
+        color: #005a8c;
+        text-decoration: none;
+}
+#header
+{
+        position: relative;
+        margin: 0px auto;
+        width: 950px;
+        background: #dedede;
+        height: 114px;
+}
+#logo-wrapper
+{
+        float: left;
+        height: 86px;
+}
+#header-wrapper #logo-wrapper .logo
+{
+        padding-right: 10px;
+        height: 86px;
+}
+#header-wrapper #logo-wrapper .logo IMG
+{
+        margin-top: 15px;
+        height: 66px;
+        margin-left: 15px;
+}
+#header-wrapper #rita-links
+{
+        z-index: 10;
+        position: absolute;
+        text-align: right;
+        width: 930px;
+        font-family: arial, verdana, helvetica;
+        font-size: 89.29%;
+        top: 47px;
+        right: 5px;
+}
+#rita-links a:link
+{
+        color: #002663;
+}
+#rita-links a:hover
+{
+        color: #cc0000;
+}
+#header-wrapper #search-box
+{
+        z-index: 10;
+        position: absolute;
+        top: 80px;
+        right: 5px;
+}
+#header-wrapper #search-box INPUT.form-text
+{
+        width: 10em;
+}
+#dotTopBanner
+{
+        position: relative;
+        width: 950px;
+        margin-left: auto;
+        margin-right: auto;
+}
+#dotTopLinks
+{
+        position: absolute;
+        text-align: right;
+        width: 548px;
+        font-family: arial, verdana, helvetica;
+        background: #003e7e;
+        height: 26px;
+        font-size: 89.29%;
+        top: 0px;
+        right: 0px;
+}
+#dotTopLinks A
+{
+        vertical-align: -50%;
+}
+#dotTopLinks a:link
+{
+        color:#FFFFFF;
+}
+#dotTopLinks a:hover
+{
+        color:#D5E7FB;
+}
+#dotTopLinks a:visited
+{
+        color:#FFFFFF;
+}
+#dotTopLinks SPAN
+{
+        vertical-align: -50%;
+}
+#dotTopLinksSeparator1
+{
+        color: #ffffff;
+}
+#dotTopLinksSeparator2
+{
+        color: #ffffff;
+}
+#header-dot-logo
+{
+        padding-bottom: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 0px;
+}
+#header INPUT
+{
+        font-family: Arial;
+        color: #000000;
+        font-size: 90%;
+        font-weight: normal;
+}
+/* End of OSTR Header Styles */
+
+/* OSTR Footer Styles */
+.footer-layout A.ext
+{
+        padding-right: 12px;
+        background: url(/images/extlink.png) no-repeat right center;
+}
+.footer-layout
+{
+        padding-bottom: 0px;
+        margin: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #000;
+        font-size: 84%;
+        padding-top: 0px;
+}
+#footer-wrapper
+{
+        position: relative;
+        padding-bottom: 0px;
+        margin: 20px auto 0px;
+        padding-left: 0px;
+        width: 938px;
+        padding-right: 0px;
+        border-top: #bbb 1px solid;
+        padding-top: 10px;
+}
+#footer
+{
+        width: 950px;
+        font-size: 89.29%;
+}
+#footer .region
+{
+        margin: 15px 0px;
+}
+.footerblack
+{
+        font-family: arial, verdana, helvetica;
+        color: #000000;
+        font-size: 90%;
+}
+.footerblack A:link
+{
+        color: #000000;
+        text-decoration: none;
+}
+.footerblack a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.footerblacksmall
+{
+        font-family: arial, verdana, helvetica;
+        color: #000000;
+        font-size: 85%;
+}
+/* End of OSTR Footer Styles */
+
