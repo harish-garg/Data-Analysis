@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Visualization</title>
+
+	<style type="text/css">
+		.Survived {
+			fill : #FF0;
+		}
+		.Died {
+			fill : #00F;
+		}
+	  	.y_axes path{
+	  		display : none;
+		}  
+		path{
+			fill: none;
+			stroke: #000;
+		}
+		svg{
+			display: block;
+			margin: 0 auto;
+		}
+		.chart_title{
+			text-align: center;
+		}
+		.d3-tip {
+			line-height: 1;
+			font-weight: bold;
+			padding: 12px;
+			background: rgba(0, 0, 0, 0.85);
+			color: #fff;
+			border-radius: 2px;
+		}
+		rect:hover{
+			opacity: 1;
+		}
+
+	</style>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+	<script type="text/javascript">
+		// setting up the svg 		
+	    var margin = 50, width = 1450, height = 300, x_axis_space = 100;
+	    var rect_side = 15;
+
+	    /*
+		 *	helper function for split the dataset into two subsets based on the gender of the passenger
+	    */
+	    function filter_data(data, sex){
+	    	var filtered_data = data.filter(function(d) {
+            	return d.Sex === sex;
+	    	});
+	    	return filtered_data;
+		}
+
+
+		function draw(data){
+
+			// subset the dataset
+			var male_data = filter_data(data, "male");
+			var female_data = filter_data(data, "female"); 
+
+			// set up svgs and append circles
+		    d3.select("div.chart")
+		    	.append("svg")
+		    		.attr("width", width)
+		    		.attr("height", height/2)
+		    		.attr("class", "male")
+		     	.selectAll("rect")
+		    	.data(male_data)
+		    	.enter()
+		    	.append("rect");   
+
+		    d3.select("div.chart")
+		    	.append("svg")
+		    		.attr("width", width)
+		    		.attr("height", height/2 + x_axis_space)
+		    		.attr("class", "female")
+		    	.selectAll("rect")
+		    	.data(female_data)
+		    	.enter()
+		    	.append("rect");
+
+		   	// build extents 
+		    var age_extent = d3.extent(data, function(d){
+		    	return d.Age;
+		    });
+
+		    var pclass_extent = d3.extent(data, function(d){
+		    	return d.Pclass;
+		    })
+
+		    // build scales
+		    var x_scale = d3.scale.linear()
+		    	.range([2.5*margin, width - 2.5*margin])
+		    	.domain(age_extent);
+
+		    var y_scale = d3.scale.linear()
+		    	.range([height/2-margin/2, rect_side + 10])
+		    	.domain(pclass_extent);
+
+
+		    // build axis
+		    var x_axis = d3.svg.axis().scale(x_scale);
+
+		    var y_axis = d3.svg.axis().scale(y_scale).orient("left").ticks(2);
+		    // set positions and radius of points
+		    d3.selectAll("rect")
+		    	.attr("x", function(d){return x_scale(d.Age) - rect_side/2;})
+		    	.attr("y", function(d){return y_scale(d.Pclass) - rect_side/2;})
+		    	.attr("width",rect_side)
+		    	.attr("height",rect_side)
+		    	.attr("opacity", 0.2)
+		    	.attr("class", function(d){
+		    		if (d.Survived == 1) return "Survived points";
+		    		else return "Died points"});
+
+		    // add axes labels and legends
+		    d3.selectAll("svg.female")
+		    	.append("g")
+		    		.attr("class", "x_axis")
+		    		.attr("transform", "translate(0, " + (height/2) + ")")
+		    		.call(x_axis)
+
+		    d3.selectAll("svg")
+		    	.append("g")
+		    		.attr("transform", "translate(" + (2.5*margin) + ",0)")
+		    		.attr("class", "y_axes")
+		    		.call(y_axis);
+		   
+		    d3.selectAll("svg")
+		    	.append("g")
+		    		.attr("class", "y_axis_title")
+		    		.attr("transform", "translate(" + (2*margin - rect_side) + "," + height/4 +")")
+		    		.append("text")
+		    			.attr("text-anchor","middle")
+		    			.text("Class")
+		    			.attr("transform", "rotate(270,0,0)");
+
+		    d3.select("svg.female")
+		    	.select("g.y_axes")
+		    	.append("text")
+		    		.attr("text-anchor", "left")
+		    		.text("female")
+		    		.attr("transform", "translate(" + (-2.4*margin) + "," + height/4 + ")");
+
+		    d3.select("svg.male")
+		    	.select("g.y_axes")
+		    	.append("text")
+		    		.attr("text-anchor", "left")
+		    		.text("male")
+		    		.attr("transform", "translate(" + (-2.4*margin) + "," + height/4 + ")");
+
+		    d3.select("svg.female")
+		    	.select("g.x_axis")
+		    	.append("text")
+		    		.attr("text-anchor", "middle")
+		    		.text("Age")
+		    		.attr("transform", "translate(" + width/2 + "," + margin + ")");		   	
+
+		    d3.select("svg.male")
+		    	.append("g")
+		    		.attr("transform", "translate(" + (width - margin) + "," + height/5 + ")")
+		    		.attr("class", "survive_legend")
+		    		.append("rect")
+		    			.attr("class", "Survived")
+		    			.attr("width",rect_side)
+		    			.attr("height",rect_side)
+		    			.attr("opacity", 1);
+
+		    d3.select("g.survive_legend")
+		    	.append("text")
+		    		.attr("text-anchor", "middle")
+		    		.text("Survived")
+		    		.attr("transform", "translate(" + rect_side/2 + "," + rect_side*2.5 + ")");
+
+		    d3.select("svg.female")
+		    	.append("g")
+		    		.attr("transform", "translate(" + (width - margin) + "," + height/5 + ")")
+		    		.attr("class", "die_legend")
+		    		.append("rect")
+		    			.attr("class", "Died")
+		    			.attr("width",rect_side)
+		    			.attr("height",rect_side)
+		    			.attr("opacity", 1);
+
+		    d3.select("g.die_legend")
+		    	.append("text")
+		    		.attr("text-anchor", "middle")
+		    		.text("Died")
+		    		.attr("transform", "translate(" + rect_side/2 + "," + rect_side*2.5 + ")");
+
+		    var tip = d3.tip()
+				.attr('class', 'd3-tip')
+				.offset([-10, 0])
+				.html(function(d) {
+			    	return "<strong>Name:</strong> <span style='color:red'>" + d.Name + "</span>" 
+			    	 + "<br/>" + "<strong>Gender:</strong> <span style='color:green'>" + d.Sex + "</span>"			    	
+			    	 + "<br/>" + "<strong>Age:</strong> <span style='color:orange'>" + d.Age + "</span>"
+			    	 + "<br/>" + "<strong>Class:</strong> <span style='color:pink'>" + d.Pclass + "</span>";
+  				})
+
+  			d3.selectAll("svg").call(tip);
+
+		    d3.selectAll("rect.points")
+		    	.on("mouseover", tip.show)
+		    	.on("mouseout", tip.hide);
+
+		    d3.select("svg.male")
+		    	.append("line")
+		    		.attr("x1", ""+0)
+		    		.attr("y1", ""+(height/2-1))
+		    		.attr("x2", ""+width)
+		    		.attr("y2", ""+(height/2-1))
+		    		.attr("stroke", "black")
+		    		.attr("opacity", 0.5);
+	    }
+	</script>
+</head>
+<body>
+	<h1 class = "chart_title">Survive or Not</h1>
+	<h2 class = "chart_title">Explained with Age, Gender and Class</h2>
+	<div class = "chart"></div>
+	<script type="text/javascript">
+	// loading data and drawing
+    d3.csv("titanic_data.csv", function(d) {
+    	// convert numeric columns into javascript numbers
+    	d["PassengerId"] = +d["PassengerId"];
+    	d["Survived"] =	+d["Survived"];
+    	d["Pclass"] = +d["Pclass"];
+    	d["Age"] = +d["Age"];
+    	d["SibSp"] = +d["SibSp"];
+    	d["Parch"] = +d["Parch"];
+    	d["Fare"] = +d["Fare"];
+    	return d;
+    	},draw);
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.1.6.min.js"></script>
+  <style>
+      .chart, h1, h3 {
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+<h1>Project6 - Make Effective Data Visualization</h1>
+<h3>Created by: Harish Garg(harish.garg@gmail.com)</h3>
+<div>
+<p>
+<b>Summary:</b> Purpose of this project is to visual Titanic survival data using dimple.js framework.
+</p>
+</div>
+<h2 class="chart">Survival rate by Age</h2>
+<div id="chartContainer1" class="chart">
+   <script type="text/javascript">
+    var svg1 = dimple.newSvg("#chartContainer1", 590, 400);
+    d3.csv("data/survival_rate_by_age.csv", function (data) {
+      var myChart = new dimple.chart(svg1, data);
+      myChart.setBounds(60, 30, 510, 305)
+      var x = myChart.addCategoryAxis("x", "age_group");
+      x.addOrderRule("order");
+      myChart.addMeasureAxis("y", "survival_rate %");
+      myChart.addSeries(null, dimple.plot.bar);
+      myChart.draw();  
+    });
+  </script>
+</div>
+
+<div>
+<p>
+<b>Observation:</b> Age doesn't seem to have much impact on the survival except for children under the age of 5. The survival rate actually decreases for age group 5-10 before it increases again slightly for age-group 10-15.
+</p>
+</div>
+
+
+<h2 class="chart">Survival rate by Sex and Class</h2>
+<div id="chartContainer3" class="chart">
+  <script type="text/javascript">
+    var svg3 = dimple.newSvg("#chartContainer3", 590, 400);
+    d3.csv("data/sex_class_count1.csv", function (data) {
+      var myChart = new dimple.chart(svg3, data);
+      myChart.setBounds(60, 30, 510, 305)
+      myChart.addCategoryAxis("x", ["Sex", "Class"]);
+      myChart.addMeasureAxis("y", "Survival rate %");
+      myChart.addSeries(null, dimple.plot.bar);
+      myChart.draw();  
+    });
+  </script>
+ </div>
+
+
+<div>
+<p>
+<b>Observation:</b> Females from 1st and 2nd class have > 90% survival rate whereas females from 3rd class has survival rate of around 50%. Among males, 1st class passengers has higher rate then 2nd and 3rd class. But the 1st class male paseengers survival rate is nowhere near the 1st class females.
+</p>
+</div>
+
+<div>
+<h2>Conclusion</h2>
+<p>Based on this dataset, below subgroups had better chance of survival..</p>
+<ul>
+<li>females passengers</li>
+<li>class 1 passengers</li>
+<li>children less then 5 years</li>
+</ul>
+
+Below subgroups had lesser chance of survival...
+<ul>
+<li>male passengers</li>
+<li>class 3 passengers</li>
+<li>older passengers</li>
+</ul>
+
+<p>However, these results are based on the data present and there would be exceptions to these findings.This dataset just had 891 records out of the total of 2,224 passengers who were there on RMS Titanic. There might be other factors impacting the survival outcome. So we conclude that this is a very limited analysis and might have different results if we had a different sample set or the whole data.
+</p>
+
+</div>
+
+</body>
+</html>
