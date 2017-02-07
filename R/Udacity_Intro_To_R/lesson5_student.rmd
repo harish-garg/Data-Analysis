@@ -214,7 +214,10 @@ str(yo)
 yo$id <- factor(yo$id)
 str(yo)
 
-qplot(data = yo, price)
+qplot(data = yo, price, binwidth = 10)
+
+summary(yo)
+length(unique(yo$price))
 ```
 
 ***
@@ -223,6 +226,8 @@ qplot(data = yo, price)
 Notes:
 
 ```{r Number of Purchases}
+yo$all.purchases <- yo$strawberry + yo$blueberry + yo$pina.colada + yo$plain + yo$mixed.berry
+summary(yo$all.purchases)
 
 ```
 
@@ -232,6 +237,11 @@ Notes:
 Notes:
 
 ```{r Prices over Time}
+qplot(data = yo, x = time, y = price)
+
+ggplot(data = yo,
+       aes(x = time, y = price)) +
+  geom_jitter(alpha = 1/4, shape = 21, fill = I("#F79420"))
 
 ```
 
@@ -245,7 +255,14 @@ Notes:
 ### Looking at Samples of Households
 
 ```{r Looking at Sample of Households}
+set.seed(4230)
+sample.ids <- sample(levels(yo$id), 16)
 
+ggplot(aes(x = time, y = price),
+       data = subset(yo, id %in% sample.ids)) +
+  facet_wrap( ~ id) +
+  geom_line() +
+  geom_point(aes(size = all.purchases), pch=1)
 ```
 
 ***
